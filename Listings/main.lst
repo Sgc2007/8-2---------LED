@@ -1,0 +1,77 @@
+C51 COMPILER V9.54   MAIN                                                                  05/09/2026 16:05:32 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <stdio.h>
+   3          
+   4          void UART_Init(void)
+   5          {
+   6   1          SCON = 0x40;
+   7   1          PCON |= 0x80;
+   8   1          TMOD &= 0x0F;
+   9   1          TMOD |= 0x20;
+  10   1          TL1 = 0xF3;
+  11   1          TH1 = 0xF3;
+  12   1          ET1 = 0;
+  13   1          TR1 = 1;
+  14   1          TI = 1;
+  15   1      }
+  16          
+  17          char putchar(char c)
+  18          {
+  19   1          SBUF = c;
+  20   1          while(!TI);
+  21   1          TI = 0;
+  22   1          return c;
+  23   1      }
+  24          
+  25          void Delay(unsigned int xms)
+  26          {
+  27   1          unsigned char i, j;
+  28   1          while(xms--)
+  29   1          {
+  30   2              i = 2;
+  31   2              j = 239;
+  32   2              do
+  33   2              {
+  34   3                  while (--j);
+  35   3              } while (--i);
+  36   2          }
+  37   1      }
+  38          
+  39          void main()
+  40          {
+  41   1          unsigned char Sec = 0;
+  42   1          UART_Init();
+  43   1          // 加一个特殊标识，证明是新程序
+  44   1          printf("UART_TEST_START\n");
+  45   1          while(1)
+  46   1          {
+  47   2              printf("%d\n", Sec);
+  48   2              Sec++;
+  49   2              Delay(1000);
+  50   2          }
+  51   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.54   MAIN                                                                  05/09/2026 16:05:32 PAGE 2   
+
+   CODE SIZE        =     92    ----
+   CONSTANT SIZE    =     21    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
