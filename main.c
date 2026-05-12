@@ -46,6 +46,6 @@ void main()
     {
         printf("%d\n", Sec);
         Sec++;
-        Delay(2000);
+        Delay(5000);
     }
 }
